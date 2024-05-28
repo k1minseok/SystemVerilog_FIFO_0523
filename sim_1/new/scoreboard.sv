@@ -63,7 +63,7 @@ class scoreboard;
     mailbox #(transaction) mon2scb_mbox;
     event gen_next_event;
 
-    int total_cnt, pass_cnt, fail_cnt, write_cnt;
+    int total_cnt, pass_cnt, fail_cnt, write_cnt, full_cnt, empty_cnt;
     reg [7:0] scb_fifo[$];    // 동적 배열 선언
     reg [7:0] scb_fifo_data;
     int max = 8;    // 최대 크기를 8로 설정
@@ -76,6 +76,8 @@ class scoreboard;
         pass_cnt            = 0;
         fail_cnt            = 0;
         write_cnt           = 0;
+        full_cnt = 0;
+        empty_cnt = 0;
     endfunction
 
     task run();
@@ -92,6 +94,7 @@ class scoreboard;
                 end else begin
                     $display(" ---> FIFO FULL! Cannot write data. fifo_data %x, queue size: %x, %p\n",
                              trans.wdata, scb_fifo.size(), scb_fifo);
+                             full_cnt++;
                 end
 
             end else if (trans.rd_en) begin
@@ -109,6 +112,7 @@ class scoreboard;
                     end
                 end else begin
                     $display(" ---> FIFO EMPTY! Cannot read data.");
+                    empty_cnt++;
                 end
 
             end

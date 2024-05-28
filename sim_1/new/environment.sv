@@ -38,6 +38,8 @@
         $display("Pass Count : %d", scb.pass_cnt);
         $display("Fail Count : %d", scb.fail_cnt);
         $display("Write Count : %d", scb.write_cnt);
+        $display("FULL Count : %d", scb.full_cnt);
+        $display("EMPTY Count : %d", scb.empty_cnt);
         $display("=============================");
         $display("== test bench is finished! ==");
         $display("=============================");
